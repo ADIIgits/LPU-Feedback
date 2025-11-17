@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -62,7 +63,6 @@ class LoginFragment : Fragment() {
 
     private fun setupClicks() {
 
-        // Reset status icon on typing — use static tick
         fun resetIcon() = showTick()
 
         usernameField.addTextChangedListener { resetIcon() }
@@ -76,12 +76,12 @@ class LoginFragment : Fragment() {
             showLoading()
             handleLogin()
         }
+
         loginStatusIcon.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
-            Toast.makeText(requireContext(), "Signed out (testing mode)", Toast.LENGTH_SHORT).show()
-            showTick() // reset icon after signout
+            Toast.makeText(requireContext(), "Signed out (testing)", Toast.LENGTH_SHORT).show()
+            showTick()
         }
-
     }
 
     // ---------- ICON HELPERS ----------
@@ -89,7 +89,7 @@ class LoginFragment : Fragment() {
     private fun showLoading() {
         Glide.with(this)
             .asGif()
-            .load(R.drawable.loading) // your GIF
+            .load(R.drawable.loading)
             .into(loginStatusIcon)
     }
 
@@ -147,6 +147,7 @@ class LoginFragment : Fragment() {
         }
 
         if (selectedRole == "student") {
+
             val regNo = registrationField.text.toString().trim()
 
             if (regNo.isEmpty()) {
@@ -158,6 +159,7 @@ class LoginFragment : Fragment() {
             loginStudent(regNo, password)
 
         } else {
+
             val username = usernameField.text.toString().trim()
 
             if (username.isEmpty()) {
@@ -191,7 +193,9 @@ class LoginFragment : Fragment() {
                 val doc = result.documents[0]
                 val email = doc.getString("useremail") ?: ""
 
-                loginWithEmail(email, password)
+                loginWithEmail(email, password) { ok ->
+                    if (ok) navigateToFragment(StudentHomeFragment())
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Error: ${it.message}", Toast.LENGTH_SHORT).show()
@@ -220,7 +224,9 @@ class LoginFragment : Fragment() {
                 val doc = result.documents[0]
                 val email = doc.getString("useremail") ?: ""
 
-                loginWithEmail(email, password)
+                loginWithEmail(email, password) { ok ->
+                    if (ok) navigateToFragment(AdminHomeFragment())
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(requireContext(), "Error: ${it.message}", Toast.LENGTH_SHORT).show()
@@ -229,9 +235,13 @@ class LoginFragment : Fragment() {
     }
 
     //---------------------------------------
-    // FIREBASE AUTH LOGIN (COMMON)
+    // FIREBASE AUTH LOGIN (WITH CALLBACK)
     //---------------------------------------
-    private fun loginWithEmail(email: String, password: String) {
+    private fun loginWithEmail(
+        email: String,
+        password: String,
+        callback: (Boolean) -> Unit
+    ) {
 
         val auth = FirebaseAuth.getInstance()
 
@@ -239,12 +249,22 @@ class LoginFragment : Fragment() {
             .addOnSuccessListener {
                 showTickFilled()
                 Toast.makeText(requireContext(), "Logged in!", Toast.LENGTH_SHORT).show()
-
-                // TODO: Navigate to dashboard
+                callback(true)
             }
             .addOnFailureListener {
                 showTick()
                 Toast.makeText(requireContext(), "Login failed: ${it.message}", Toast.LENGTH_LONG).show()
+                callback(false)
             }
     }
+
+    //---------------------------------------
+    // NAVIGATE SAFELY TO FRAGMENT
+    //---------------------------------------
+    private fun navigateToFragment(fragment: Fragment) {
+        requireActivity().supportFragmentManager.commit {
+            replace(R.id.fragment_loader, fragment)
+        }
+    }
+
 }

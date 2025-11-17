@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.commit
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import android.text.Editable
+import android.text.TextUtils.replace
 import android.text.TextWatcher
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
@@ -49,7 +51,7 @@ class RegisterFragment : Fragment() {
     private lateinit var checkRegNoBtn: ImageView
     private var isRegNoAvailable = false
     private lateinit var registerStatusIcon: ImageView
-
+    private lateinit var logindirector : TextView
 
 
 
@@ -96,6 +98,7 @@ class RegisterFragment : Fragment() {
         checkUsernameBtn = view.findViewById(R.id.checkUsernameBtn)
         checkRegNoBtn = view.findViewById(R.id.checkRegNoBtn)
         registerStatusIcon = view.findViewById(R.id.registerStatusIcon)
+        logindirector = view.findViewById(R.id.logindirector)
 
 
 
@@ -106,6 +109,9 @@ class RegisterFragment : Fragment() {
 
         fun resetRegisterIcon() {
             registerStatusIcon.setImageResource(R.drawable.tick)
+        }
+        logindirector.setOnClickListener {
+            navigateToLogin()
         }
 
         emailField.addTextChangedListener { resetRegisterIcon() }
@@ -277,10 +283,18 @@ class RegisterFragment : Fragment() {
         for (hostel in filteredList) {
             val btn = Button(requireContext()).apply {
                 text = hostel.name
-                setPadding(32, 12, 32, 12)
+                textSize = 18f
                 background = requireContext().getDrawable(R.drawable.roundedcorner)
                 backgroundTintList = requireContext().getColorStateList(R.color.black10)
-                textSize = 18f
+                setPadding(32, 12, 32, 12)
+
+                // 🔥 Add margin here
+                layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    setMargins(8, 8, 8, 8)   // left, top, right, bottom
+                }
             }
 
             // apply selected style if matches
@@ -350,6 +364,8 @@ class RegisterFragment : Fragment() {
 
             handleAdminRegistration(username, name, selectedGender, email, password, selectedMess)
         }
+
+
     }
 
 
@@ -406,8 +422,9 @@ class RegisterFragment : Fragment() {
                             "all_admins",
                             com.google.firebase.firestore.FieldValue.arrayUnion(adminRef)
                         ).addOnSuccessListener {
+                            navigateToLogin()
                             Toast.makeText(requireContext(), "Admin linked to hostel!", Toast.LENGTH_SHORT).show()
-                            navigateToAdminDashboard()
+
                         }.addOnFailureListener { e ->
                             Toast.makeText(requireContext(), "Failed to update hostel: ${e.message}", Toast.LENGTH_LONG).show()
                         }
@@ -428,6 +445,12 @@ class RegisterFragment : Fragment() {
             }
     }
 
+    fun navigateToLogin(){
+        //redirect to login
+        requireActivity().supportFragmentManager.commit {
+            replace(R.id.fragment_loader, LoginFragment())
+        }
+    }
 
 
     private fun handleStudentRegistration(
@@ -474,6 +497,7 @@ class RegisterFragment : Fragment() {
                             "all_students",
                             com.google.firebase.firestore.FieldValue.arrayUnion(studentRef)
                         ).addOnSuccessListener {
+                            navigateToLogin()
                             Toast.makeText(requireContext(), "Student registered!", Toast.LENGTH_SHORT).show()
                         }.addOnFailureListener { e ->
                             Toast.makeText(requireContext(), "Failed to update hostel: ${e.message}", Toast.LENGTH_LONG).show()

@@ -7,5 +7,6 @@
     <color name="black80">#CC000000</color>
     <color name="selectedblue">#4D3CA6A6</color>
     <color name="black70">#B2000000</color>
+    <color name="transparent">#00000000</color>
 
 </resources>

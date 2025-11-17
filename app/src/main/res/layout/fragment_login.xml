@@ -118,7 +118,10 @@
                             android:inputType="text"
                             app:layout_constraintTop_toBottomOf="@id/usernametext"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"/>
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:paddingHorizontal="10dp"
+                            android:textColor="@color/black80"
+                            />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -159,7 +162,10 @@
                             android:inputType="text"
                             app:layout_constraintTop_toBottomOf="@id/registrationtext"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:paddingHorizontal="10dp"
+                            android:textColor="@color/black80"
+                            />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -201,7 +207,9 @@
                         android:inputType="textPassword"
                         app:layout_constraintTop_toBottomOf="@id/passwordtext"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:textColor="@color/black80"
+                        />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

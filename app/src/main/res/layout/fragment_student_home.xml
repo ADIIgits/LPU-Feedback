@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="StudentHomeFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- HEADER TITLE -->
+        <TextView
+            android:id="@+id/hostelTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BH4 Mess"
+            android:textSize="34sp"
+            android:textColor="@color/black80"
+            android:fontFamily="@font/roboto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"/>
+
+        <!-- DATE PICKER TEXT VIEW -->
+        <TextView
+            android:id="@+id/datePickerText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="12 Nov 2025"
+            android:textSize="18sp"
+            android:fontFamily="@font/roboto_bold"
+            android:textColor="@color/black80"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:background="@drawable/roundedcorner"
+            android:backgroundTint="@color/black10"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintTop_toTopOf="@id/hostelTitle"
+            app:layout_constraintBottom_toBottomOf="@id/hostelTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="20dp"/>
+
+        <!-- Scrollable Content -->
+        <ScrollView
+            android:id="@+id/formScroll"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/hostelTitle"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/formContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="20dp">
+
+                <LinearLayout
+                    android:id="@+id/allquestionscontainer"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    >
+
+                </LinearLayout>
+
+                <!-- Rating -->
+                <TextView
+                    android:id="@+id/q4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Q. Rating?"
+                    android:textColor="@color/black80"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:layout_marginTop="25dp"
+                    app:layout_constraintTop_toBottomOf="@id/allquestionscontainer"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <!-- Label + Value -->
+                <LinearLayout
+                    android:id="@+id/ratingHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/q4"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <TextView
+                        android:id="@+id/ratingLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Label"
+                        android:textColor="@color/black50"
+                        android:fontFamily="@font/roboto"/>
+
+                    <TextView
+                        android:id="@+id/ratingRange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0-10"
+                        android:textColor="@color/black50"
+                        android:fontFamily="@font/roboto"/>
+                </LinearLayout>
+
+                <!-- SLIDER -->
+                <SeekBar
+                    android:id="@+id/ratingSeekbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="10"
+                    app:layout_constraintTop_toBottomOf="@id/ratingHeader"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="4dp" />
+
+                <!-- Slider Desc -->
+                <TextView
+                    android:id="@+id/ratingDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Description"
+                    android:textColor="@color/black50"
+                    android:fontFamily="@font/roboto"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toBottomOf="@id/ratingSeekbar"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <!-- SUBMIT BUTTON -->
+                <android.widget.Button
+                    android:id="@+id/submitBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Submit"
+                    android:textAllCaps="false"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textColor="@color/black80"
+                    android:background="@drawable/roundedcornerpure"
+                    android:backgroundTint="@color/selectedblue"
+                    android:paddingHorizontal="40dp"
+                    android:layout_marginTop="30dp"
+                    app:layout_constraintTop_toBottomOf="@id/ratingDescription"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "166140613840",
+    "project_id": "lpu-feedback-5f516",
+    "storage_bucket": "lpu-feedback-5f516.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:166140613840:android:fc14fed46a0b32e246bad5",
+        "android_client_info": {
+          "package_name": "com.example.lpufeedback"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhiFoBE_G47Go9g_wzj-5gl2g6Ox5trb4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
