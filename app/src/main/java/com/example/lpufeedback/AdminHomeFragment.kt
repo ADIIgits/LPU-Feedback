@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
+
 class AdminHomeFragment : Fragment() {
 
     private lateinit var feedbackContainer: LinearLayout
@@ -22,6 +24,11 @@ class AdminHomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_admin_home, container, false)
         feedbackContainer = view.findViewById(R.id.feedbackscontainer)
+
+        parentFragmentManager.setFragmentResult(
+            "updateTitle",
+            bundleOf("title" to "Admin")
+        )
 
         val createBtn = view?.findViewById<ConstraintLayout>(R.id.constraintLayout)
         createBtn?.setOnClickListener {

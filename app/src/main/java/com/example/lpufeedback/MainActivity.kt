@@ -2,6 +2,7 @@ package com.example.lpufeedback
 
 import android.os.Bundle
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -73,6 +74,7 @@ class MainActivity : AppCompatActivity() {
 
     private val db = FirebaseFirestore.getInstance()
     private val auth = FirebaseAuth.getInstance()
+    private lateinit var pagename : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +90,12 @@ class MainActivity : AppCompatActivity() {
         flag.setOnClickListener { auth.signOut()
             Toast.makeText(this, "signedout", Toast.LENGTH_SHORT).show()
         }
+        pagename = findViewById(R.id.pagename)
+        supportFragmentManager.setFragmentResultListener("updateTitle", this) { _, bundle ->
+            val title = bundle.getString("title") ?: ""
+            pagename.text = title
+        }
+
         // ⭐ First load all hostels
         loadHostels {
             // ⭐ Then detect logged-in user type

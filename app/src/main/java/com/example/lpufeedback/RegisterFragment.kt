@@ -72,6 +72,12 @@ class RegisterFragment : Fragment() {
         setupClicks()
 
         selectStudent() // default
+        selectBoys()
+    }
+    private fun selectBoys() {
+        selectedGender = "boys"
+        highlightButton(btnBoys, btnGirls)
+        renderMessButtons()
     }
 
 

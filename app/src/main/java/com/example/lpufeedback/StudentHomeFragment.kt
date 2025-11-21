@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
@@ -31,6 +32,12 @@ class StudentHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        parentFragmentManager.setFragmentResult(
+            "updateTitle",
+            bundleOf("title" to "Student")
+        )
+
 
         setupViews(view)
         setupDatePicker()
